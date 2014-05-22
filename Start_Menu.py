@@ -21,7 +21,7 @@ def start_menu():
             password = input("Password: ")
 
             Database.register(username, password)
-            print("Registration Successfull")
+            print("Registration Successful")
 
         elif command == 'login':
             username = input("Valid username: ")
