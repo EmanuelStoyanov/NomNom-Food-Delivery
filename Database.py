@@ -30,5 +30,17 @@ def login(username, password):
 
     if(user):
         return User(user[0], user[2])
-    else:
-        return False
+
+    return False
+
+
+def admin(password):
+    query = "SELECT password FROM users WHERE username = admin"
+
+    cursor.execute(query)
+    admin_pass = cursor.fetchone()
+
+    if password == admin_pass:
+        return True
+
+    return False
