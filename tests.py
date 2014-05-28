@@ -8,6 +8,14 @@ class DatabaseTests(unittest.TestCase):
         Database.create_users_table()
         Database.register('Barney', '420', "Mclarens")
 
+    def test_admin(self):
+        Database.cursor.execute("SELECT username, password \
+            FROM users WHERE username = 'admin'")
+        admin = Database.cursor.fetchone()
+
+        self.assertEqual(admin[0], 'admin')
+        self.assertEqual(admin[1], 'ADMINNOMNOM')
+
     def test_register_username(self):
         Database.cursor.execute('SELECT username FROM users \
         WHERE username = (?) AND password = (?)', ('Barney', '420'))
