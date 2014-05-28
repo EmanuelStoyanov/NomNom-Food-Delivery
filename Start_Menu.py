@@ -22,8 +22,11 @@ def start_menu():
             password = input("Password: ")
             address = input("Address(Don't worry, you could change it later):")
 
-            Database.register(username, password, address)
-            print("Registration Successful")
+            is_registered = Database.register(username, password, address)
+            if is_registered:
+                print("Registration Successful")
+            else:
+                print("You cannot register username 'admin'")
 
         elif command == 'login':
             username = input("Valid username: ")
@@ -40,12 +43,12 @@ def start_menu():
             print("You are trying to access admin account")
             admin_password = input('Admin password:')
 
-            if admin_password == 'ADMINNOMNOM':
+            is_admin = Database.admin(admin_password)
+
+            if is_admin:
                 print("Okay you're in.Now you can modify the menu")
-                return True
             else:
                 print("Sorry, wrong admin password")
-                return False
 
         else:
             print("You have entered an invalid command")

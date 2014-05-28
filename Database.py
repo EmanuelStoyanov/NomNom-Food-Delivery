@@ -16,12 +16,18 @@ def create_users_table():
 
 
 def register(username, password, address):
+    if username == 'admin':
+        return False
     insert = "insert into users (username, password, address) values (?, ?, ?)"
     cursor.execute(insert, (username, password, address))
     conn.commit()
+    return True
 
 
 def login(username, password):
+    if username == 'admin':
+        return False
+
     select_query = "SELECT username, password, address FROM users \
     WHERE username = ? AND password = ? LIMIT 1"
 
@@ -35,12 +41,12 @@ def login(username, password):
 
 
 def admin(password):
-    query = "SELECT password FROM users WHERE username = admin"
+    query = "SELECT password FROM users WHERE username = ?"
 
-    cursor.execute(query)
+    cursor.execute(query, ('admin', ))
     admin_pass = cursor.fetchone()
 
-    if password == admin_pass:
+    if password == admin_pass[0]:
         return True
 
     return False
