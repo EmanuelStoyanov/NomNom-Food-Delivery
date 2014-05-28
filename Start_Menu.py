@@ -12,6 +12,7 @@ def start_menu():
             print("command 'login' - if you already have an account")
             print("command 'register' - if you want to create new account")
             print("command 'exit' - if you want to close the program")
+            print("command 'admin' - if you have admin rights")
 
         elif command == 'exit':
             break
@@ -34,6 +35,17 @@ def start_menu():
                 print("You are logged in")
             else:
                 print("Invalid username or password, please try again")
+
+        elif command == 'admin':
+            print("You are trying to access admin account")
+            admin_password = input('Admin password:')
+
+            if admin_password == 'ADMINNOMNOM':
+                print("Okay you're in.Now you can modify the menu")
+                return True
+            else:
+                print("Sorry, wrong admin password")
+                return False
 
         else:
             print("You have entered an invalid command")
