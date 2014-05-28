@@ -14,9 +14,10 @@ def create_users_table():
 
     cursor.execute(create_query)
 
-    register_admin = "insert into users (username, password) \
+    register_admin = "INSERT INTO users (username, password) \
     values (?, ?)"
     cursor.execute(register_admin, ('admin', 'ADMINNOMNOM'))
+    conn.commit()
 
 
 def register(username, password, address):
