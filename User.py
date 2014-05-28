@@ -3,3 +3,6 @@ class User:
         self.username = username
         self.basket = []
 
+    def get_username(self):
+        return self.username
+
