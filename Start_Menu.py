@@ -19,8 +19,9 @@ def start_menu():
         elif command == 'register':
             username = input("Username: ")
             password = input("Password: ")
+            address = input("Address(Don't worry, you could change it later):")
 
-            Database.register(username, password)
+            Database.register(username, password, address)
             print("Registration Successful")
 
         elif command == 'login':
