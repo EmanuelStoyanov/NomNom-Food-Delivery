@@ -21,8 +21,13 @@ def create_users_table():
 
 
 def register(username, password, address):
-    if username == 'admin':
-        return False
+    select_query = "SELECT username FROM users"
+    usernames = cursor.execute(select_query)
+    for row in usernames:
+        if username == row[0]:
+            return False
+    conn.commit()
+   
     insert = "insert into users (username, password, address) values (?, ?, ?)"
     cursor.execute(insert, (username, password, address))
     conn.commit()

@@ -26,7 +26,7 @@ def start_menu():
             if is_registered:
                 print("Registration Successful")
             else:
-                print("You cannot register username 'admin'")
+                print("That username has already been taken")
 
         elif command == 'login':
             username = input("Valid username: ")
