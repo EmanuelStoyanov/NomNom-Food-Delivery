@@ -1,5 +1,5 @@
 import sqlite3
-from User import User
+from user import user
 
 conn = sqlite3.connect("Users.db")
 cursor = conn.cursor()
@@ -42,10 +42,10 @@ def login(username, password):
     WHERE username = ? AND password = ? LIMIT 1"
 
     cursor.execute(select_query, (username, password))
-    user = cursor.fetchone()
+    current_user = cursor.fetchone()
 
-    if(user):
-        return User(user[0], user[2])
+    if(current_user):
+        return user(current_user[0], current_user[2])
 
     return False
 

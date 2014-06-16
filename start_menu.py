@@ -1,4 +1,4 @@
-import Database
+import database
 
 
 def start_menu():
@@ -9,53 +9,69 @@ def start_menu():
         command = input("Enter command or 'help' to see all commands>")
 
         if command == 'help':
-            print("command 'login' - if you already have an account")
-            print("command 'register' - if you want to create new account")
-            print("command 'exit' - if you want to close the program")
-            print("command 'admin' - if you have admin rights")
+            help()
 
         elif command == 'exit':
             break
 
         elif command == 'register':
-            username = input("Username: ")
-            password = input("Password: ")
-            address = input("Address(Don't worry, you could change it later):")
-
-            is_registered = Database.register(username, password, address)
-            if is_registered:
-                print("Registration Successful")
-            else:
-                print("That username has already been taken")
+            register()
 
         elif command == 'login':
-            username = input("Valid username: ")
-            password = input("Valid password: ")
-
-            valid_user = Database.login(username, password)
-
-            if valid_user:
-                print("You are logged in")
-            else:
-                print("Invalid username or password, please try again")
+            login()
 
         elif command == 'admin':
-            print("You are trying to access admin account")
-            admin_password = input('Admin password:')
-
-            is_admin = Database.admin(admin_password)
-
-            if is_admin:
-                print("Okay you're in.Now you can modify the menu")
-            else:
-                print("Sorry, wrong admin password")
+            admin()
 
         else:
             print("You have entered an invalid command")
 
 
+def help():
+    print("command 'login' - if you already have an account")
+    print("command 'register' - if you want to create new account")
+    print("command 'exit' - if you want to close the program")
+    print("command 'admin' - if you have admin rights")
+
+
+def register():
+    username = input("Username: ")
+    password = input("Password: ")
+    address = input("Address(Don't worry, you could change it later):")
+
+    is_registered = database.register(username, password, address)
+    if is_registered:
+        print("Registration Successful")
+    else:
+        print("That username has already been taken")
+
+
+def login():
+    username = input("Valid username: ")
+    password = input("Valid password: ")
+
+    valid_user = database.login(username, password)
+
+    if valid_user:
+        print("You are logged in")
+    else:
+        print("Invalid username or password, please try again")
+
+
+def admin():
+    print("You are trying to access admin account")
+    admin_password = input('Admin password:')
+
+    is_admin = database.admin(admin_password)
+
+    if is_admin:
+        print("Okay you're in.Now you can modify the menu")
+    else:
+        print("Sorry, wrong admin password")
+
+
 def main():
-    Database.create_users_table()
+    database.create_users_table()
     start_menu()
 
 if __name__ == '__main__':
