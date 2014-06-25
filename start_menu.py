@@ -1,4 +1,5 @@
 import database
+from admin_menu import admin_menu
 
 
 def start_menu():
@@ -65,7 +66,7 @@ def admin():
     is_admin = database.admin(admin_password)
 
     if is_admin:
-        print("Okay you're in.Now you can modify the menu")
+        admin_menu()
     else:
         print("Sorry, wrong admin password")
 
