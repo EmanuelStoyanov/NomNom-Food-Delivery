@@ -74,10 +74,20 @@ def create_restaurant_table(new_restaurant):
 
     cursor.execute(create_query)
 
-    status = "INSERT INTO %s (is_open, status) \
-    values (?, ?)" % new_restaurant
-    cursor.execute(status, (1, 'Not busy'))
+    existance_query = "SELECT is_open FROM %s LIMIT 1" % new_restaurant
+    cursor.execute(existance_query)
+    exist = cursor.fetchone()
+
+    if not exist:
+        status = "INSERT INTO %s (is_open, status) \
+        values (?, ?)" % new_restaurant
+        cursor.execute(status, (1, 'Not busy'))
+    else:
+        print("This restaurant already exists.")
+        return False
+
     conn.commit()
+    return True
 
 
 def add(restaurant, product, price):

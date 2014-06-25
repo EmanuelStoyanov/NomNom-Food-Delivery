@@ -41,6 +41,9 @@ class database_tests(unittest.TestCase):
         logged_user = database.login('Barney', '421')
         self.assertFalse(logged_user)
 
+    def test_add_existing_restaurant(self):
+        self.assertFalse(database.create_restaurant_table('speedy'))
+
     def test_add_pizza_price(self):
         database.cursor.execute("SELECT price \
         FROM speedy WHERE products = 'pizza'")
