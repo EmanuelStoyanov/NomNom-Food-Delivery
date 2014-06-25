@@ -91,11 +91,20 @@ def create_restaurant_table(new_restaurant):
 
 
 def add(restaurant, product, price):
+    select_query = "SELECT products FROM %s" % restaurant
+    products = cursor.execute(select_query)
+
+    for row in products:
+        if product == row[0]:
+            print("This product is already in the catalog")
+            return False
+
     add_query = "INSERT INTO %s (products, price) \
     values (?, ?)" % restaurant
-
     cursor.execute(add_query, (product, price))
+
     conn.commit()
+    return True
 
 
 def open(restaurant):

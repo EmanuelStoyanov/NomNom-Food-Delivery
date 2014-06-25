@@ -51,6 +51,9 @@ class database_tests(unittest.TestCase):
 
         self.assertEqual(3.50, price[0])
 
+    def test_add_pizza_twice(self):
+        self.assertFalse(database.add('speedy', 'pizza', 4.00))
+
     def test_is_open(self):
         self.assertFalse(database.open('speedy'))
 
