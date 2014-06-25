@@ -72,3 +72,11 @@ def create_restaurant_table(new_restaurant):
     values (?, ?)" % new_restaurant
     cursor.execute(status, (1, 'Not busy'))
     conn.commit()
+
+
+def add(restaurant, product, price):
+    add_query = "INSERT INTO %s (products, price) \
+    values (?, ?)" % restaurant
+
+    cursor.execute(add_query, (product, price))
+    conn.commit()
