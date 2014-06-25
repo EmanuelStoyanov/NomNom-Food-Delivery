@@ -80,3 +80,32 @@ def add(restaurant, product, price):
 
     cursor.execute(add_query, (product, price))
     conn.commit()
+
+
+def open(restaurant):
+    status_query = "SELECT is_open FROM %s" % restaurant
+    cursor.execute(status_query)
+    status = cursor.fetchone()
+
+    if(status[0]):
+        print("It is already open.")
+    else:
+        open_query = "UPDATE %s SET is_open = 1 WHERE is_open = 0" % restaurant
+        cursor.execute(open_query)
+
+    conn.commit()
+
+
+def close(restaurant):
+    status_query = "SELECT is_open FROM %s" % restaurant
+    cursor.execute(status_query)
+    status = cursor.fetchone()
+
+    if(not status[0]):
+        print("It is already closed.")
+    else:
+        close_query = "UPDATE %s SET is_open = 0 \
+        WHERE is_open = 1" % restaurant
+        cursor.execute(close_query)
+
+    conn.commit()
