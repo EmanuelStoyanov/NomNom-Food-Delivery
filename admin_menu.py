@@ -22,6 +22,9 @@ def admin_menu():
         elif command == 'close':
             close()
 
+        elif command == 'status':
+            status()
+
         elif command == 'exit':
             break
 
@@ -55,3 +58,9 @@ def open():
 def close():
     restaurant = input("Which restaurant you want to close: ")
     database.close(restaurant)
+
+
+def status():
+    restaurant = input("Which restaurant's status you want to change: ")
+    new_status = input("What should be the new status? ")
+    database.status(restaurant, new_status)

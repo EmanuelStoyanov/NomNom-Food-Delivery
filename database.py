@@ -109,3 +109,9 @@ def close(restaurant):
         cursor.execute(close_query)
 
     conn.commit()
+
+
+def status(restaurant, new_status):
+    status_query = "UPDATE %s SET status = ? LIMIT 1" % restaurant
+    cursor.execute(status_query, (new_status, ))
+    conn.commit()
