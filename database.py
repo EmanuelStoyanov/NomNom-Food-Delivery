@@ -27,7 +27,7 @@ def register(username, password, address):
         if username == row[0]:
             return False
     conn.commit()
-   
+
     insert = "insert into users (username, password, address) values (?, ?, ?)"
     cursor.execute(insert, (username, password, address))
     conn.commit()
@@ -60,3 +60,15 @@ def admin(password):
         return True
 
     return False
+
+
+def create_restaurant_table(new_restaurant):
+    create_query = "create table if not exists %s \
+    (is_open INTEGER,status TEXT,products TEXT,price REAL)" % new_restaurant
+
+    cursor.execute(create_query)
+
+    status = "INSERT INTO %s (is_open, status) \
+    values (?, ?)" % new_restaurant
+    cursor.execute(status, (1, 'Not busy'))
+    conn.commit()

@@ -1,4 +1,4 @@
-restaurants = {}
+import database
 
 
 def admin_menu():
@@ -9,6 +9,9 @@ def admin_menu():
 
         if command == 'help':
             help()
+
+        elif command == 'new':
+            new()
 
         elif command == 'switch':
             break
@@ -21,3 +24,8 @@ def help():
     print("command 'open' - if you want to open a restaurant")
     print("command 'close' - if you want to close a restaurant")
     print("command 'status' - if you want to change restaurant's status")
+
+
+def new():
+    new_restaurant = input("Enter the name of the new restaurant: ")
+    database.create_restaurant_table(new_restaurant)
