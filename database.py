@@ -14,9 +14,15 @@ def create_users_table():
 
     cursor.execute(create_query)
 
-    register_admin = "INSERT INTO users (username, password) \
-    values (?, ?)"
-    cursor.execute(register_admin, ('admin', 'ADMINNOMNOM'))
+    admin_query = "SELECT username FROM users where username = 'admin' "
+    cursor.execute(admin_query)
+    admin = cursor.fetchone()
+
+    if not admin:
+        register_admin = "INSERT INTO users (username, password) \
+        values (?, ?)"
+        cursor.execute(register_admin, ('admin', 'ADMINNOMNOM'))
+
     conn.commit()
 
 
