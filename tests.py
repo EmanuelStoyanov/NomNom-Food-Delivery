@@ -7,6 +7,9 @@ class database_tests(unittest.TestCase):
     def setUp(self):
         database.create_users_table()
         database.register('Barney', '420', "Mclarens")
+        database.create_restaurant_table('speedy')
+        database.add('speedy', 'pizza', 3.50)
+        database.status('speedy', 'Not taking orders.')
 
     def test_admin(self):
         database.cursor.execute("SELECT username, password \
@@ -38,8 +41,27 @@ class database_tests(unittest.TestCase):
         logged_user = database.login('Barney', '421')
         self.assertFalse(logged_user)
 
+    def test_add_pizza_price(self):
+        database.cursor.execute("SELECT price \
+        FROM speedy WHERE products = 'pizza'")
+        price = database.cursor.fetchone()
+
+        self.assertEqual(3.50, price[0])
+
+    def test_is_open(self):
+        self.assertFalse(database.open('speedy'))
+
+    def test_close_an_open_restaurant(self):
+        self.assertTrue(database.close('speedy'))
+
+    def test_set_status(self):
+        database.cursor.execute("SELECT status FROM speedy LIMIT 1")
+        status = database.cursor.fetchone()
+        self.assertEqual('Not taking orders.', status[0])
+
     def tearDown(self):
         database.cursor.execute('DROP TABLE users')
+        database.cursor.execute('DROP TABLE speedy')
 
 if __name__ == '__main__':
     unittest.main()

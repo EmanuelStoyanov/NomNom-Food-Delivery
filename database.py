@@ -89,11 +89,13 @@ def open(restaurant):
 
     if(status[0]):
         print("It is already open.")
+        return False
     else:
         open_query = "UPDATE %s SET is_open = 1 WHERE is_open = 0" % restaurant
         cursor.execute(open_query)
 
     conn.commit()
+    return True
 
 
 def close(restaurant):
@@ -103,12 +105,14 @@ def close(restaurant):
 
     if(not status[0]):
         print("It is already closed.")
+        return False
     else:
         close_query = "UPDATE %s SET is_open = 0 \
         WHERE is_open = 1" % restaurant
         cursor.execute(close_query)
 
     conn.commit()
+    return True
 
 
 def status(restaurant, new_status):
