@@ -16,6 +16,9 @@ def logged_menu(valid_user):
         elif command == 'cart':
             cart(valid_user)
 
+        elif command == 'status':
+            status(valid_user)
+
         elif command == 'exit':
             break
 
@@ -91,4 +94,8 @@ def final_details(valid_user):
         else:
             print("Wrong command")
         valid_user.basket = []
+
+
+def status(valid_user):
+    print(database.status(valid_user))
 

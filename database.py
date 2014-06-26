@@ -212,3 +212,13 @@ def ready(username, basket):
         add_query = "INSERT INTO orders (username, product, price, status) values (?, ?, ?, ?)"
         cursor.execute(add_query, (username, product[0], product[1], "Preparing."))
     conn.commit()
+
+
+def status(valid_user):
+    show_status = "SELECT status FROM orders WHERE username = ? LIMIT 1"
+    cursor.execute(show_status, (valid_user.username, ))
+    status = cursor.fetchone()
+
+    return "Status of your order is " + status[0]
+
+
