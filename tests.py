@@ -7,6 +7,7 @@ class database_tests(unittest.TestCase):
     def setUp(self):
         database.create_users_table()
         database.create_restaurant_table()
+        database.create_orders_table()
         database.register('Barney', '420', "Mclarens")
         database.create_menu_table('speedy')
         database.create_menu_table('subway')
@@ -48,6 +49,7 @@ class database_tests(unittest.TestCase):
         database.cursor.execute('DROP TABLE speedy')
         database.cursor.execute('DROP TABLE restaurants')
         database.cursor.execute('DROP TABLE subway')
+        database.cursor.execute('DROP table orders')
 
     def test_add_existing_restaurant(self):
         self.assertFalse(database.create_menu_table('speedy'))

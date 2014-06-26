@@ -78,6 +78,16 @@ def create_restaurant_table():
     conn.commit()
 
 
+def create_orders_table():
+    create_query = '''create table if not exists
+                    orders(
+                    username TEXT,
+                    product TEXT,
+                    price REAL)'''
+    cursor.execute(create_query)
+    conn.commit()
+
+
 def create_menu_table(new_restaurant):
     create_query = "create table if not exists %s \
     (products TEXT,price REAL)" % new_restaurant
@@ -188,3 +198,9 @@ def valid_product(restaurant, product):
 
     return product_price
 
+
+def ready(username, basket):
+    for product in basket:
+        add_query = "INSERT INTO orders (username, product, price) values (?, ?, ?)"
+        cursor.execute(add_query, (username, product[0], product[1]))
+    conn.commit()

@@ -35,23 +35,28 @@ def order(valid_user):
     if database.is_open(restaurant):
         print("This restaurant is currently open!")
 
-    while True:
+        while True:
 
-        command = input("Type 'add' or 'exit'>")
-        if command == 'add':
-            product = input("Which product do you want to add? ")
-            product_price = database.valid_product(restaurant, product)
-            if product_price:
-                valid_user.basket.append(product_price)
-                print(valid_user.basket)
+            command = input("Type 'add', 'ready' or 'exit'>")
+            if command == 'add':
+                product = input("Which product do you want to add? ")
+                product_price = database.valid_product(restaurant, product)
+                if product_price:
+                    valid_user.basket.append(product_price)
+                    print(valid_user.basket)
+                else:
+                    print("This product is not on the menu")
+
+            elif command == 'ready':
+                database.ready(valid_user.username, valid_user.basket)
+                break
+
+            elif command == 'exit':
+                break
+
             else:
-                print("This product is not on the menu")
-
-        elif command == 'exit':
-            break
-
-        else:
-            print("Wrong command!")
+                print("Wrong command!")
+                
     else:
         print("This restaurant is currently not open, sorry")
 
