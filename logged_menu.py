@@ -10,15 +10,15 @@ def logged_menu(valid_user):
         if command == 'help':
             help()
 
-        elif command == 'menu':
-            menu()
+        elif command == 'order':
+            order()
 
         elif command == 'exit':
             break
 
 
 def help():
-    print("command 'menu' - if you want to see the whole menu")
+    print("command 'order' - if you want to see the menu and order")
     print("command 'delivery tax' - if you want to see \
     what is the delivery tax")
     print("command 'cart' - if you want to see your cart")
@@ -26,8 +26,17 @@ def help():
     print("command 'exit' - if you want to exit to normal mode")
 
 
-def menu():
+def order():
     print("These are our restaurants")
     database.display_restaurants()
-    restaurants = input("Which menu you want to see: ")
-    database.menu(restaurants)
+    restaurant = input("Which menu you want to see: ")
+    database.menu(restaurant)
+
+    if database.is_open(restaurant):
+        print("This restaurant is currently open!")
+        command = input("If you want to add something to the cart type 'add'>")
+        if command == 'add':
+            print("Adding")
+    else:
+        print("This restaurant is currently not open, sorry")
+

@@ -171,3 +171,11 @@ def menu(restaurant):
     print("product - price")
     for row in products:
         print(row[0] + " - " + str(row[1]))
+
+
+def is_open(restaurant):
+    open_query = "SELECT is_open FROM restaurants WHERE name = ?"
+    cursor.execute(open_query, (restaurant, ))
+    status = cursor.fetchone()
+
+    return status[0]
