@@ -13,6 +13,9 @@ def logged_menu(valid_user):
         elif command == 'order':
             order(valid_user)
 
+        elif command == 'cart':
+            cart(valid_user)
+
         elif command == 'exit':
             break
 
@@ -43,12 +46,12 @@ def order(valid_user):
                 product_price = database.valid_product(restaurant, product)
                 if product_price:
                     valid_user.basket.append(product_price)
-                    print(valid_user.basket)
+                    cart(valid_user)
                 else:
                     print("This product is not on the menu")
 
             elif command == 'ready':
-                database.ready(valid_user.username, valid_user.basket)
+                final_details(valid_user)
                 break
 
             elif command == 'exit':
@@ -56,7 +59,36 @@ def order(valid_user):
 
             else:
                 print("Wrong command!")
-                
+
     else:
         print("This restaurant is currently not open, sorry")
+
+
+def cart(valid_user):
+    sum = 3
+    print("You have in cart:")
+    for product_price in valid_user.basket:
+        sum += product_price[1]
+        print(product_price[0] + " - " + str(product_price[1]))
+    print("Delivery - 3.00")
+    print("Total sum:" + str(sum))
+
+
+def final_details(valid_user):
+    print("This is the final step.")
+    cart(valid_user)
+    command = input("Are you sure that's all? y/n? ")
+    if command == 'y':
+        command2 = input("Is this where you want to receive the order: " + valid_user.address + " y/n?")
+        if command2 == 'y':
+            database.ready(valid_user.username, valid_user.basket)
+            print("Order is taken.")
+        elif command2 == 'n':
+            new_address = input("Where to send the order: ")
+            valid_user.address = new_address
+            database.ready(valid_user.username, valid_user.basket)
+            print("Order is taken and will be sent to the new address")
+        else:
+            print("Wrong command")
+        valid_user.basket = []
 
