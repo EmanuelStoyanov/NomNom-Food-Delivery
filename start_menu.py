@@ -76,6 +76,7 @@ def main():
     database.create_users_table()
     database.create_restaurant_table()
     database.create_orders_table()
+    database.create_taxes_table()
     start_menu()
 
 if __name__ == '__main__':

@@ -89,6 +89,16 @@ def create_orders_table():
     conn.commit()
 
 
+def create_taxes_table():
+    create_query = '''create table if not exists
+                    taxes(
+                    district TEXT,
+                    tax REAL)'''
+    cursor.execute(create_query)
+    conn.commit()
+
+
+
 def create_menu_table(new_restaurant):
     create_query = "create table if not exists %s \
     (products TEXT,price REAL)" % new_restaurant
