@@ -179,3 +179,12 @@ def is_open(restaurant):
     status = cursor.fetchone()
 
     return status[0]
+
+
+def valid_product(restaurant, product):
+    select_query = "SELECT products, price FROM %s WHERE products = ?" % restaurant
+    cursor.execute(select_query, (product, ))
+    product_price = cursor.fetchone()
+
+    return product_price
+
