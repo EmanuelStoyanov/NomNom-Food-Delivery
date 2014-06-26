@@ -68,23 +68,32 @@ def admin(password):
     return False
 
 
-def create_restaurant_table(new_restaurant):
+def create_restaurant_table():
+    create_query = '''create table if not exists
+                    restaurants(
+                    name TEXT,
+                    is_open INTEGER,
+                    status TEXT)'''
+    cursor.execute(create_query)
+    conn.commit()
+
+
+def create_menu_table(new_restaurant):
     create_query = "create table if not exists %s \
-    (is_open INTEGER,status TEXT,products TEXT,price REAL)" % new_restaurant
+    (products TEXT,price REAL)" % new_restaurant
 
     cursor.execute(create_query)
 
-    existance_query = "SELECT is_open FROM %s LIMIT 1" % new_restaurant
-    cursor.execute(existance_query)
-    exist = cursor.fetchone()
+    existance_query = "SELECT name FROM restaurants"
+    names = cursor.execute(existance_query)
+    for row in names:
+        if new_restaurant == row[0]:
+            print("This restaurant already exists.")
+            return False
 
-    if not exist:
-        status = "INSERT INTO %s (is_open, status) \
-        values (?, ?)" % new_restaurant
-        cursor.execute(status, (1, 'Not busy'))
-    else:
-        print("This restaurant already exists.")
-        return False
+    status = "INSERT INTO restaurants (name, is_open, status) \
+    values (?, ?, ?)"
+    cursor.execute(status, (new_restaurant, 0, 'Not busy'))
 
     conn.commit()
     return True
@@ -108,39 +117,39 @@ def add(restaurant, product, price):
 
 
 def open(restaurant):
-    status_query = "SELECT is_open FROM %s" % restaurant
-    cursor.execute(status_query)
+    status_query = "SELECT is_open FROM restaurants WHERE name = ?"
+    cursor.execute(status_query, (restaurant, ))
     status = cursor.fetchone()
 
-    if(status[0]):
+    if status[0]:
         print("It is already open.")
         return False
     else:
-        open_query = "UPDATE %s SET is_open = 1 WHERE is_open = 0" % restaurant
-        cursor.execute(open_query)
+        open_query = "UPDATE restaurants SET is_open = 1 WHERE name = ?"
+        cursor.execute(open_query, (restaurant, ))
 
     conn.commit()
     return True
 
 
 def close(restaurant):
-    status_query = "SELECT is_open FROM %s" % restaurant
-    cursor.execute(status_query)
+    status_query = "SELECT is_open FROM restaurants WHERE name = ?"
+    cursor.execute(status_query, (restaurant, ))
     status = cursor.fetchone()
 
-    if(not status[0]):
+    if status[0] == 0:
         print("It is already closed.")
         return False
     else:
-        close_query = "UPDATE %s SET is_open = 0 \
-        WHERE is_open = 1" % restaurant
-        cursor.execute(close_query)
+        close_query = "UPDATE restaurants SET is_open = 0 WHERE name = ?"
+        cursor.execute(close_query, (restaurant, ))
 
     conn.commit()
     return True
 
 
 def status(restaurant, new_status):
-    status_query = "UPDATE %s SET status = ? LIMIT 1" % restaurant
-    cursor.execute(status_query, (new_status, ))
+    status_query = "UPDATE restaurants SET status = ? \
+    WHERE name = ?"
+    cursor.execute(status_query, (new_status, restaurant))
     conn.commit()

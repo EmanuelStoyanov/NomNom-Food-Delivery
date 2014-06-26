@@ -40,7 +40,7 @@ def help():
 
 def new():
     new_restaurant = input("Enter the name of the new restaurant: ")
-    database.create_restaurant_table(new_restaurant)
+    database.create_menu_table(new_restaurant)
 
 
 def add():

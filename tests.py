@@ -6,14 +6,16 @@ class database_tests(unittest.TestCase):
 
     def setUp(self):
         database.create_users_table()
+        database.create_restaurant_table()
         database.register('Barney', '420', "Mclarens")
-        database.create_restaurant_table('speedy')
+        database.create_menu_table('speedy')
+        database.create_menu_table('subway')
         database.add('speedy', 'pizza', 3.50)
         database.status('speedy', 'Not taking orders.')
 
     def test_admin(self):
         database.cursor.execute("SELECT username, password \
-            FROM users WHERE username = 'admin'")
+        FROM users WHERE username = 'admin'")
         admin = database.cursor.fetchone()
 
         self.assertEqual(admin[0], 'admin')
@@ -41,8 +43,13 @@ class database_tests(unittest.TestCase):
         logged_user = database.login('Barney', '421')
         self.assertFalse(logged_user)
 
+    def tearDown(self):
+        database.cursor.execute('DROP TABLE users')
+        database.cursor.execute('DROP TABLE speedy')
+        database.cursor.execute('DROP TABLE restaurants')
+
     def test_add_existing_restaurant(self):
-        self.assertFalse(database.create_restaurant_table('speedy'))
+        self.assertFalse(database.create_menu_table('speedy'))
 
     def test_add_pizza_price(self):
         database.cursor.execute("SELECT price \
@@ -54,20 +61,25 @@ class database_tests(unittest.TestCase):
     def test_add_pizza_twice(self):
         self.assertFalse(database.add('speedy', 'pizza', 4.00))
 
-    def test_is_open(self):
-        self.assertFalse(database.open('speedy'))
+    def test_close_a_closed_restaurant(self):
+        self.assertFalse(database.close('speedy'))
+
+    def test_open_closed_restaurant(self):
+        self.assertTrue(database.open('speedy'))
+
+    def test_open_an_opened_restaurant(self):
+        database.open('subway')
+        self.assertFalse(database.open('subway'))
 
     def test_close_an_open_restaurant(self):
-        self.assertTrue(database.close('speedy'))
+        database.open('subway')
+        self.assertTrue(database.close('subway'))
 
     def test_set_status(self):
-        database.cursor.execute("SELECT status FROM speedy LIMIT 1")
+        database.cursor.execute("SELECT status FROM restaurants WHERE name = 'speedy'")
         status = database.cursor.fetchone()
         self.assertEqual('Not taking orders.', status[0])
 
-    def tearDown(self):
-        database.cursor.execute('DROP TABLE users')
-        database.cursor.execute('DROP TABLE speedy')
 
 if __name__ == '__main__':
     unittest.main()
