@@ -83,7 +83,8 @@ def create_orders_table():
                     orders(
                     username TEXT,
                     product TEXT,
-                    price REAL)'''
+                    price REAL,
+                    status TEXT)'''
     cursor.execute(create_query)
     conn.commit()
 
@@ -158,10 +159,17 @@ def close(restaurant):
     return True
 
 
-def status(restaurant, new_status):
+def status_r(restaurant, new_status):
     status_query = "UPDATE restaurants SET status = ? \
     WHERE name = ?"
     cursor.execute(status_query, (new_status, restaurant))
+    conn.commit()
+
+
+def status_d(username, new_status):
+    status_query = "UPDATE orders SET status = ? \
+    WHERE username = ?"
+    cursor.execute(status_query, (new_status, username))
     conn.commit()
 
 
@@ -201,6 +209,6 @@ def valid_product(restaurant, product):
 
 def ready(username, basket):
     for product in basket:
-        add_query = "INSERT INTO orders (username, product, price) values (?, ?, ?)"
-        cursor.execute(add_query, (username, product[0], product[1]))
+        add_query = "INSERT INTO orders (username, product, price, status) values (?, ?, ?, ?)"
+        cursor.execute(add_query, (username, product[0], product[1], "Preparing."))
     conn.commit()
