@@ -153,3 +153,21 @@ def status(restaurant, new_status):
     WHERE name = ?"
     cursor.execute(status_query, (new_status, restaurant))
     conn.commit()
+
+
+def display_restaurants():
+    display_query = "SELECT name FROM restaurants"
+    restaurants = cursor.execute(display_query)
+
+    for row in restaurants:
+        print(row[0])
+
+
+def menu(restaurant):
+    display_query = "SELECT products,price FROM %s" % restaurant
+    cursor.execute(display_query)
+    products = cursor.fetchall()
+
+    print("product - price")
+    for row in products:
+        print(row[0] + " - " + str(row[1]))

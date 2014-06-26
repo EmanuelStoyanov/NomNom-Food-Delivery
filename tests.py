@@ -47,6 +47,7 @@ class database_tests(unittest.TestCase):
         database.cursor.execute('DROP TABLE users')
         database.cursor.execute('DROP TABLE speedy')
         database.cursor.execute('DROP TABLE restaurants')
+        database.cursor.execute('DROP TABLE subway')
 
     def test_add_existing_restaurant(self):
         self.assertFalse(database.create_menu_table('speedy'))
@@ -76,7 +77,8 @@ class database_tests(unittest.TestCase):
         self.assertTrue(database.close('subway'))
 
     def test_set_status(self):
-        database.cursor.execute("SELECT status FROM restaurants WHERE name = 'speedy'")
+        database.cursor.execute("SELECT status \
+        FROM restaurants WHERE name = 'speedy'")
         status = database.cursor.fetchone()
         self.assertEqual('Not taking orders.', status[0])
 

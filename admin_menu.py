@@ -28,6 +28,9 @@ def admin_menu():
         elif command == 'exit':
             break
 
+        else:
+            print("You have entered an invalid command")
+
 
 def help():
     print("command 'new' - if you want to add new restaurant")

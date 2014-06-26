@@ -1,5 +1,6 @@
 import database
 from admin_menu import admin_menu
+from logged_menu import logged_menu
 
 
 def start_menu():
@@ -54,7 +55,7 @@ def login():
     valid_user = database.login(username, password)
 
     if valid_user:
-        print("You are logged in")
+        logged_menu(valid_user)
     else:
         print("Invalid username or password, please try again")
 
