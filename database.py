@@ -237,9 +237,9 @@ def ready(username, basket):
     conn.commit()
 
 
-def status_orders(username):
+def status_orders(valid_user):
     show_status = "SELECT status FROM orders WHERE username = ? LIMIT 1"
-    cursor.execute(show_status, (username, ))
+    cursor.execute(show_status, (valid_user.get_username(), ))
     status = cursor.fetchone()
 
     if status:

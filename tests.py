@@ -111,15 +111,6 @@ class database_tests(unittest.TestCase):
         database.add('speedy', 'pizza', 3.5)
         self.assertFalse(database.valid_product('speedy', 'spaghetti'))
 
-    def test_status_of_an_order(self):
-        database.ready('Barney', [('pizza', 3.5), ('coke', 2.5)])
-        self.assertEqual("Status of your order is Preparing.",
-                         database.status_orders('Barney'))
-
-    def test_status_of_an_not_existing_order(self):
-        self.assertEqual("You have no orders",
-                         database.status_orders('Barney'))
-
     def test_delivery_tax_existing_district(self):
         database.add_district('Lulin', 4)
         self.assertEqual((True, 4), database.delivery_tax('Lulin'))
