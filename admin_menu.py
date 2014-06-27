@@ -47,6 +47,7 @@ def help():
           "if you want to change restaurant's status")
     print("command 'status delivery' - "
           "if you want to change delivery's status")
+    print("command 'add district' - if you want to add a new district")
     print("command 'exit' - if you want to exit to normal mode")
 
 

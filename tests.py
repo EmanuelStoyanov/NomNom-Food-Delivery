@@ -13,7 +13,7 @@ class database_tests(unittest.TestCase):
         database.create_menu_table('speedy')
         database.create_menu_table('subway')
         database.add('speedy', 'pizza', 3.50)
-        database.status_r('speedy', 'Not taking orders.')
+        database.update_status_restaurant('speedy', 'Not taking orders.')
 
     def test_admin(self):
         database.cursor.execute("SELECT username, password \

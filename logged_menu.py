@@ -2,11 +2,11 @@ import database
 
 
 def logged_menu(valid_user):
-    print("Welcome.You are logged in as " + valid_user.username)
+    print("Welcome.You are logged in as " + valid_user.get_username())
 
     while True:
         command = input("(%s)Enter command or 'help' "
-                        "to see all commands>" % valid_user.username)
+                        "to see all commands>" % valid_user.get_username())
 
         if command == 'help':
             help()
@@ -85,10 +85,13 @@ def order(valid_user):
 def cart(valid_user):
     sum = 0
     print("You have in cart:")
-    for product_price in valid_user.basket:
-        sum += product_price[1]
-        print(product_price[0] + " - " + str(product_price[1]))
-    print("Total sum without delivery:" + str(sum))
+    if valid_user.get_basket():
+        for product_price in valid_user.get_basket():
+            sum += product_price[1]
+            print(product_price[0] + " - " + str(product_price[1]))
+        print("Total sum without delivery:" + str(sum))
+    else:
+        print("You have nothing in cart yet")
 
 
 def final_details(valid_user):
@@ -103,20 +106,20 @@ def final_details(valid_user):
 
         command2 = \
             input("Is this where you want to receive the order: "
-                  + valid_user.address + " y/n?")
+                  + valid_user.get_address() + " y/n?")
 
         if command2 == 'y':
-            database.ready(valid_user.username, valid_user.basket)
+            database.ready(valid_user.get_username(), valid_user.get_basket())
             print("Order is taken.")
         elif command2 == 'n':
             new_address = input("Where to send the order: ")
-            valid_user.address = new_address
-            database.ready(valid_user.username, valid_user.basket)
+            valid_user.set_address(new_address)
+            database.ready(valid_user.get_username(), valid_user.get_basket())
             print("Order is taken and will be sent to the new address")
         else:
             print("Wrong command")
 
-    valid_user.basket = []
+    valid_user.set_basket([])
 
 
 def status_orders(valid_user):
@@ -138,7 +141,7 @@ def add(valid_user, restaurant):
     product = input("Which product do you want to add? ")
     product_price = database.valid_product(restaurant, product)
     if product_price:
-        valid_user.basket.append(product_price)
+        valid_user.get_basket().append(product_price)
         cart(valid_user)
     else:
         print("This product is not on the menu")
@@ -146,9 +149,9 @@ def add(valid_user, restaurant):
 
 def remove(valid_user):
     removed = input("Which item do you want to remove? ")
-    for product_price in valid_user.basket:
+    for product_price in valid_user.get_basket():
         if removed == product_price[0]:
-            valid_user.basket.remove(product_price)
+            valid_user.get_basket().remove(product_price)
             return True
 
     print("There is no such thing in basket")

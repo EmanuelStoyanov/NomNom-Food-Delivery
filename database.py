@@ -239,10 +239,13 @@ def ready(username, basket):
 
 def status_orders(valid_user):
     show_status = "SELECT status FROM orders WHERE username = ? LIMIT 1"
-    cursor.execute(show_status, (valid_user.username, ))
+    cursor.execute(show_status, (valid_user.get_username(), ))
     status = cursor.fetchone()
 
-    return "Status of your order is " + status[0]
+    if status:
+        return "Status of your order is " + status[0]
+    else:
+        return "You have no orders"
 
 
 def add_district(district, tax):
