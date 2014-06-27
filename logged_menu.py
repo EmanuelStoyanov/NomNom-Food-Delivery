@@ -19,8 +19,14 @@ def logged_menu(valid_user):
         elif command == 'status':
             status(valid_user)
 
+        elif command == 'delivery tax':
+            delivery_tax()
+
         elif command == 'exit':
             break
+
+        else:
+            print("Wrong command!")
 
 
 def help():
@@ -81,13 +87,8 @@ def final_details(valid_user):
     cart(valid_user)
     command = input("Are you sure that's all? y/n? ")
     if command == 'y':
-        district = input("Please type your district to calculate delivery tax: ")
-        tax = database.delivery_tax(district)
-        if not tax[0]:
-            print("Sorry, we do not send to this district")
+        if not delivery_tax():
             return False
-        else:
-            print("Your delivery tax will be" + str(tax[1]))
         command2 = input("Is this where you want to receive the order: " + valid_user.address + " y/n?")
         if command2 == 'y':
             database.ready(valid_user.username, valid_user.basket)
@@ -99,9 +100,20 @@ def final_details(valid_user):
             print("Order is taken and will be sent to the new address")
         else:
             print("Wrong command")
-        valid_user.basket = []
+    valid_user.basket = []
 
 
 def status(valid_user):
     print(database.status(valid_user))
+
+
+def delivery_tax():
+    district = input("Please type your district to calculate delivery tax: ")
+    tax = database.delivery_tax(district)
+    if not tax[0]:
+        print("Sorry, we do not send to this district")
+        return False
+    else:
+        print("Your delivery tax will be " + str(tax[1]))
+        return True
 
