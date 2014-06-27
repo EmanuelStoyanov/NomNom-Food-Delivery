@@ -65,12 +65,18 @@ def add():
 
 def open():
     restaurant = input("Which restaurant you want to open: ")
-    database.open(restaurant)
+    if database.is_there_such_restaurant(restaurant):
+        database.open(restaurant)
+    else:
+        print("There is no such restaurant")
 
 
 def close():
     restaurant = input("Which restaurant you want to close: ")
-    database.close(restaurant)
+    if database.is_there_such_restaurant(restaurant):
+        database.close(restaurant)
+    else:
+        print("There is no such restaurant")
 
 
 def update_status_restaurant():
