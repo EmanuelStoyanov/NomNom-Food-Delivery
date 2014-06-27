@@ -46,7 +46,12 @@ def order(valid_user):
     print("These are our restaurants")
     database.display_restaurants()
     restaurant = input("Which menu you want to see: ")
-    database.menu(restaurant)
+
+    if database.is_there_such_restaurant(restaurant):
+        database.menu(restaurant)
+    else:
+        print("There is no such restaurant")
+        return False
 
     if database.is_open(restaurant):
         print("This restaurant is currently open!")
