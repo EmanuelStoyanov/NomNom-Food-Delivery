@@ -49,7 +49,7 @@ def order(valid_user):
 
         while True:
 
-            command = input("Type 'add', 'ready' or 'exit'>")
+            command = input("Type 'add','remove','ready' or 'exit'>")
             if command == 'add':
                 product = input("Which product do you want to add? ")
                 product_price = database.valid_product(restaurant, product)
@@ -58,6 +58,9 @@ def order(valid_user):
                     cart(valid_user)
                 else:
                     print("This product is not on the menu")
+
+            elif command == 'remove':
+                remove(valid_user)
 
             elif command == 'ready':
                 final_details(valid_user)
@@ -85,11 +88,15 @@ def cart(valid_user):
 def final_details(valid_user):
     print("This is the final step.")
     cart(valid_user)
+
     command = input("Are you sure that's all? y/n? ")
     if command == 'y':
+
         if not delivery_tax():
             return False
+
         command2 = input("Is this where you want to receive the order: " + valid_user.address + " y/n?")
+        
         if command2 == 'y':
             database.ready(valid_user.username, valid_user.basket)
             print("Order is taken.")
@@ -100,6 +107,7 @@ def final_details(valid_user):
             print("Order is taken and will be sent to the new address")
         else:
             print("Wrong command")
+
     valid_user.basket = []
 
 
@@ -117,3 +125,13 @@ def delivery_tax():
         print("Your delivery tax will be " + str(tax[1]))
         return True
 
+
+def remove(valid_user):
+    removed = input("Which item do you want to remove? ")
+    for product_price in valid_user.basket:
+        if removed == product_price[0]:
+            valid_user.basket.remove(product_price)
+            return True
+
+    print("There is no such thing in basket")
+    return False
