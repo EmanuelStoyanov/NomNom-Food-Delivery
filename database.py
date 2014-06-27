@@ -119,6 +119,17 @@ def create_menu_table(new_restaurant):
     return True
 
 
+def is_there_such_restaurant(restaurant):
+    is_there_query = "SELECT name FROM restaurants WHERE name = ?"
+    cursor.execute(is_there_query, (restaurant, ))
+    restaurant = cursor.fetchone()
+
+    if not restaurant:
+        return False
+
+    return True
+
+
 def add(restaurant, product, price):
     select_query = "SELECT products FROM %s" % restaurant
     products = cursor.execute(select_query)

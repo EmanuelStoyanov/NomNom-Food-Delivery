@@ -55,9 +55,12 @@ def new():
 
 def add():
     restaurant = input("Name of the restaurant: ")
-    product = input("What do you want to add to the menu: ")
-    price = input("What is the price of this product :")
-    database.add(restaurant, product, price)
+    if database.is_there_such_restaurant(restaurant):
+        product = input("What do you want to add to the menu: ")
+        price = input("What is the price of this product :")
+        database.add(restaurant, product, price)
+    else:
+        print("There is no such restaurant")
 
 
 def open():
