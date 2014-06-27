@@ -98,7 +98,6 @@ def create_taxes_table():
     conn.commit()
 
 
-
 def create_menu_table(new_restaurant):
     create_query = "create table if not exists %s \
     (products TEXT,price REAL)" % new_restaurant
@@ -169,14 +168,14 @@ def close(restaurant):
     return True
 
 
-def status_r(restaurant, new_status):
+def status_restaurant(restaurant, new_status):
     status_query = "UPDATE restaurants SET status = ? \
     WHERE name = ?"
     cursor.execute(status_query, (new_status, restaurant))
     conn.commit()
 
 
-def status_d(username, new_status):
+def status_delivery(username, new_status):
     status_query = "UPDATE orders SET status = ? \
     WHERE username = ?"
     cursor.execute(status_query, (new_status, username))
@@ -232,3 +231,15 @@ def status(valid_user):
     return "Status of your order is " + status[0]
 
 
+def add_district(district, tax):
+    add_district = "INSERT INTO taxes (district, tax) values (?, ?)"
+    cursor.execute(add_district, (district, tax))
+    conn.commit()
+
+
+def delivery_tax(district):
+    tax_query = "SELECT tax FROM taxes WHERE district = ?"
+    cursor.execute(tax_query, (district, ))
+    tax = cursor.fetchone()
+
+    return tax[0]

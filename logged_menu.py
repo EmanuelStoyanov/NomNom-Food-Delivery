@@ -68,13 +68,12 @@ def order(valid_user):
 
 
 def cart(valid_user):
-    sum = 3
+    sum = 0
     print("You have in cart:")
     for product_price in valid_user.basket:
         sum += product_price[1]
         print(product_price[0] + " - " + str(product_price[1]))
-    print("Delivery - 3.00")
-    print("Total sum:" + str(sum))
+    print("Total sum without delivery:" + str(sum))
 
 
 def final_details(valid_user):
@@ -82,6 +81,8 @@ def final_details(valid_user):
     cart(valid_user)
     command = input("Are you sure that's all? y/n? ")
     if command == 'y':
+        district = input("Please type your district to calculate delivery tax: ")
+        print("Your delivery tax will be" + str(database.delivery_tax(district)))
         command2 = input("Is this where you want to receive the order: " + valid_user.address + " y/n?")
         if command2 == 'y':
             database.ready(valid_user.username, valid_user.basket)
