@@ -23,7 +23,7 @@ def admin_menu():
             close()
 
         elif command == 'status restaurant':
-            status_restaurant()
+            update_status_restaurant()
 
         elif command == 'status delivery':
             status_delivery()
@@ -43,8 +43,8 @@ def help():
     print("command 'add' - if you want to add the menu")
     print("command 'open' - if you want to open a restaurant")
     print("command 'close' - if you want to close a restaurant")
-    print("command 'status_r' - if you want to change restaurant's status")
-    print("command 'status_d' - if you want to change delivery's status")
+    print("command 'status restaurant' - if you want to change restaurant's status")
+    print("command 'status delivery' - if you want to change delivery's status")
     print("command 'exit' - if you want to exit to normal mode")
 
 
@@ -70,16 +70,16 @@ def close():
     database.close(restaurant)
 
 
-def status_restaurant():
+def update_status_restaurant():
     restaurant = input("Which restaurant's status you want to change: ")
     new_status = input("What should be the new status? ")
-    database.status_r(restaurant, new_status)
+    database.update_status_restaurant(restaurant, new_status)
 
 
 def status_delivery():
     username = input("Which username's delivery status you want to change: ")
     new_status = input("What should be the new status? ")
-    database.status_d(username, new_status)
+    database.status_delivery(username, new_status)
 
 
 def add_district():

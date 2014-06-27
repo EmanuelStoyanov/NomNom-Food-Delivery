@@ -168,7 +168,7 @@ def close(restaurant):
     return True
 
 
-def status_restaurant(restaurant, new_status):
+def update_status_restaurant(restaurant, new_status):
     status_query = "UPDATE restaurants SET status = ? \
     WHERE name = ?"
     cursor.execute(status_query, (new_status, restaurant))
@@ -223,7 +223,7 @@ def ready(username, basket):
     conn.commit()
 
 
-def status(valid_user):
+def status_orders(valid_user):
     show_status = "SELECT status FROM orders WHERE username = ? LIMIT 1"
     cursor.execute(show_status, (valid_user.username, ))
     status = cursor.fetchone()
@@ -246,3 +246,14 @@ def delivery_tax(district):
         return (False, 0)
 
     return (True, tax[0])
+
+
+def status_restaurant(restaurant):
+    status_query = "SELECT status FROM restaurants WHERE name = ?"
+    cursor.execute(status_query, (restaurant, ))
+    status = cursor.fetchone()
+
+    if not status:
+        return "There is no such restaurant"
+    else:
+        return "Status is " + status[0]

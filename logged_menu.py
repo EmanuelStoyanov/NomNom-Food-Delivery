@@ -16,8 +16,11 @@ def logged_menu(valid_user):
         elif command == 'cart':
             cart(valid_user)
 
-        elif command == 'status':
-            status(valid_user)
+        elif command == 'status orders':
+            status_orders(valid_user)
+
+        elif command == 'status restaurant':
+            status_restaurant()
 
         elif command == 'delivery tax':
             delivery_tax()
@@ -34,7 +37,8 @@ def help():
     print("command 'delivery tax' - if you want to see \
     what is the delivery tax")
     print("command 'cart' - if you want to see your cart")
-    print("command 'status' - if you want to see status of the orders")
+    print("command 'status orders' - if you want to see status of the orders")
+    print("command 'status restaurant' - if you want to see status of the restaurant")
     print("command 'exit' - if you want to exit to normal mode")
 
 
@@ -50,14 +54,9 @@ def order(valid_user):
         while True:
 
             command = input("Type 'add','remove','ready' or 'exit'>")
+
             if command == 'add':
-                product = input("Which product do you want to add? ")
-                product_price = database.valid_product(restaurant, product)
-                if product_price:
-                    valid_user.basket.append(product_price)
-                    cart(valid_user)
-                else:
-                    print("This product is not on the menu")
+                add(valid_user, restaurant)
 
             elif command == 'remove':
                 remove(valid_user)
@@ -111,8 +110,8 @@ def final_details(valid_user):
     valid_user.basket = []
 
 
-def status(valid_user):
-    print(database.status(valid_user))
+def status_orders(valid_user):
+    print(database.status_orders(valid_user))
 
 
 def delivery_tax():
@@ -126,6 +125,16 @@ def delivery_tax():
         return True
 
 
+def add(valid_user, restaurant):
+    product = input("Which product do you want to add? ")
+    product_price = database.valid_product(restaurant, product)
+    if product_price:
+        valid_user.basket.append(product_price)
+        cart(valid_user)
+    else:
+        print("This product is not on the menu")
+
+
 def remove(valid_user):
     removed = input("Which item do you want to remove? ")
     for product_price in valid_user.basket:
@@ -135,3 +144,8 @@ def remove(valid_user):
 
     print("There is no such thing in basket")
     return False
+
+
+def status_restaurant():
+    restaurant = input("Which restaurant's status you want to check? ")
+    print(database.status_restaurant(restaurant))
