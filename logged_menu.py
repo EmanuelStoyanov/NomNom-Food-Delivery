@@ -82,7 +82,12 @@ def final_details(valid_user):
     command = input("Are you sure that's all? y/n? ")
     if command == 'y':
         district = input("Please type your district to calculate delivery tax: ")
-        print("Your delivery tax will be" + str(database.delivery_tax(district)))
+        tax = database.delivery_tax(district)
+        if not tax[0]:
+            print("Sorry, we do not send to this district")
+            return False
+        else:
+            print("Your delivery tax will be" + str(tax[1]))
         command2 = input("Is this where you want to receive the order: " + valid_user.address + " y/n?")
         if command2 == 'y':
             database.ready(valid_user.username, valid_user.basket)

@@ -242,4 +242,7 @@ def delivery_tax(district):
     cursor.execute(tax_query, (district, ))
     tax = cursor.fetchone()
 
-    return tax[0]
+    if not tax:
+        return (False, 0)
+
+    return (True, tax[0])
