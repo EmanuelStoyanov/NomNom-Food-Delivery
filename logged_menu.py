@@ -5,7 +5,8 @@ def logged_menu(valid_user):
     print("Welcome.You are logged in as " + valid_user.username)
 
     while True:
-        command = input("(%s)Enter command or 'help' to see all commands>" % valid_user.username)
+        command = input("(%s)Enter command or 'help' \
+        to see all commands>" % valid_user.username)
 
         if command == 'help':
             help()
@@ -38,7 +39,8 @@ def help():
     what is the delivery tax")
     print("command 'cart' - if you want to see your cart")
     print("command 'status orders' - if you want to see status of the orders")
-    print("command 'status restaurant' - if you want to see status of the restaurant")
+    print("command 'status restaurant' - \
+    if you want to see status of the restaurant")
     print("command 'exit' - if you want to exit to normal mode")
 
 
@@ -99,8 +101,10 @@ def final_details(valid_user):
         if not delivery_tax():
             return False
 
-        command2 = input("Is this where you want to receive the order: " + valid_user.address + " y/n?")
-        
+        command2 = \
+            input("Is this where you want to receive the order: "
+                  + valid_user.address + " y/n?")
+
         if command2 == 'y':
             database.ready(valid_user.username, valid_user.basket)
             print("Order is taken.")

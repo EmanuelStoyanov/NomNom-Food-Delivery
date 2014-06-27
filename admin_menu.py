@@ -43,8 +43,10 @@ def help():
     print("command 'add' - if you want to add the menu")
     print("command 'open' - if you want to open a restaurant")
     print("command 'close' - if you want to close a restaurant")
-    print("command 'status restaurant' - if you want to change restaurant's status")
-    print("command 'status delivery' - if you want to change delivery's status")
+    print("command 'status restaurant' - \
+    if you want to change restaurant's status")
+    print("command 'status delivery' - \
+    if you want to change delivery's status")
     print("command 'exit' - if you want to exit to normal mode")
 
 

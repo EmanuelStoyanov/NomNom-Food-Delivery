@@ -220,7 +220,8 @@ def is_open(restaurant):
 
 
 def valid_product(restaurant, product):
-    select_query = "SELECT products, price FROM %s WHERE products = ?" % restaurant
+    select_query = "SELECT products, price \
+    FROM %s WHERE products = ?" % restaurant
     cursor.execute(select_query, (product, ))
     product_price = cursor.fetchone()
 
@@ -229,8 +230,10 @@ def valid_product(restaurant, product):
 
 def ready(username, basket):
     for product in basket:
-        add_query = "INSERT INTO orders (username, product, price, status) values (?, ?, ?, ?)"
-        cursor.execute(add_query, (username, product[0], product[1], "Preparing."))
+        add_query = "INSERT INTO orders \
+        (username, product, price, status) values (?, ?, ?, ?)"
+        cursor.execute(add_query,
+                      (username, product[0], product[1], "Preparing."))
     conn.commit()
 
 

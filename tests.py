@@ -15,7 +15,6 @@ class database_tests(unittest.TestCase):
         database.add('speedy', 'pizza', 3.50)
         database.status_r('speedy', 'Not taking orders.')
 
-
     def test_admin(self):
         database.cursor.execute("SELECT username, password \
         FROM users WHERE username = 'admin'")
